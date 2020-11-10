@@ -7,26 +7,32 @@ class GameOfLife:
         self.height = height
         self.size = width * height
         self.grid = []
+        self._adjacency = []
 
     def generate(self, density=0.25):
         self.grid = [random.random() < density for _ in range(self.size)]
-
-    def clear(self):
-        return [False for _ in self.grid]
-
-    def next_generation(self):
-        def next_state(cell_idx):
+        def make_adjacency(cell_idx):
+            list = []
             directions = [(0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1)]
             x = cell_idx % self.width
             y = int((cell_idx - x) / self.width)
-            neighbours = 0
             for i in range(8):
                 direction = directions[i]
                 direction_x = x + direction[0]
                 direction_y = y + direction[1]
                 if 0 <= direction_x < self.width and 0 <= direction_y < self.height:
                     idx = direction_x + (direction_y * self.width)
-                    neighbours += 1 if self.grid[idx] is True else 0
+                    list.append(idx)
+            return list
+        self._adjacency = [make_adjacency(i) for i in range(self.size)]
+
+    def clear(self):
+        return [False for _ in self.grid]
+
+    def next_generation(self):
+        def next_state(cell_idx):
+            neighbours_state = [self.grid[idx] for idx in self._adjacency[cell_idx]]
+            neighbours = sum(neighbours_state)
             if neighbours < 2 or neighbours > 3:
                 return False
             if neighbours == 2:
