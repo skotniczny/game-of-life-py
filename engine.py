@@ -11,8 +11,9 @@ class GameOfLife:
 
     def generate(self, density=0.25):
         self.grid = [random.random() < density for _ in range(self.size)]
+
         def make_adjacency(cell_idx):
-            list = []
+            adjacent = []
             directions = [(0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1)]
             x = cell_idx % self.width
             y = int((cell_idx - x) / self.width)
@@ -22,8 +23,8 @@ class GameOfLife:
                 direction_y = y + direction[1]
                 if 0 <= direction_x < self.width and 0 <= direction_y < self.height:
                     idx = direction_x + (direction_y * self.width)
-                    list.append(idx)
-            return list
+                    adjacent.append(idx)
+            return adjacent
         self._adjacency = [make_adjacency(i) for i in range(self.size)]
 
     def clear(self):

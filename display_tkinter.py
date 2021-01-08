@@ -2,6 +2,7 @@ import time
 from engine import GameOfLife
 from tkinter import *
 
+
 def make_board(ctx, board: GameOfLife, box_size = 10):
     cells = []
     for i in range(board.size):
@@ -12,11 +13,13 @@ def make_board(ctx, board: GameOfLife, box_size = 10):
         cells.append(cell)
     return cells
 
+
 def display_canvas(ctx, cells, board: GameOfLife):
     for i, value in enumerate(cells):
         color = "#3f51b5" if board.grid[i] else "#ffffff"
         ctx.itemconfig(value, fill = color)
     ctx.update()
+
 
 def run(board: GameOfLife, box_size, delay):
     master = Tk()
@@ -29,12 +32,18 @@ def run(board: GameOfLife, box_size, delay):
     time.sleep(delay)
     is_running = True
     iterations = 0
-    while is_running:
+
+    def next_frame():
+        nonlocal is_running
+        if not is_running:
+            return
         board.next_generation()
         display_canvas(ctx, cells, board)
-        time.sleep(delay)
+        nonlocal iterations
         iterations += 1
+        ctx.after(delay, next_frame)
         if iterations == 500:
             is_running = False
             print(iterations)
+    next_frame()
     master.mainloop()
