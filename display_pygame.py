@@ -22,6 +22,28 @@ def run(board: GameOfLife, box_size):
     # How many seconds the "game" is played.
     playtime = 0.0
     board.generate()
+
+    def update_board():
+        nonlocal background
+        nonlocal board
+        nonlocal box_size
+        nonlocal screen
+        background.fill("#ffffff")
+        for i in range(board.size):
+            if board.grid[i]:
+                col = i % board.width
+                row = int((i - col) / board.width)
+                color = "#3f51b5"
+                left = col * box_size + 1
+                top = row * box_size + 1
+                size = box_size - 1
+                background.fill(color, [left, top, size, size])
+        # Update Pygame display.
+        # Convert Surface object to make blitting faster.
+        background = background.convert()
+        # Copy background to screen (position (0, 0) is upper left corner).
+        screen.blit(background, (0, 0))
+
     while mainloop:
         # Do not go faster than this framerate.
         milliseconds = clock.tick(fps)
@@ -44,27 +66,15 @@ def run(board: GameOfLife, box_size):
                     cell_y = math.floor(y / box_size)
                     cell_index = cell_x + cell_y * board.width
                     board.toggle_cell(cell_index)
+                    update_board()
 
         # Print framerate and playtime in titlebar.
         text = "FPS: {0:.2f}   Playtime: {1:.2f}".format(clock.get_fps(), playtime)
         pygame.display.set_caption(text)
         if not is_stopped:
             board.next_generation()
-            background.fill("#ffffff")
-            for i in range(board.size):
-                if board.grid[i]:
-                    col = i % board.width
-                    row = int((i - col) / board.width)
-                    color = "#3f51b5"
-                    left = col * box_size + 1
-                    top = row * box_size + 1
-                    size = box_size - 1
-                    background.fill(color, [left, top, size, size])
-        # Update Pygame display.
-        # Convert Surface object to make blitting faster.
-        background = background.convert()
-        # Copy background to screen (position (0, 0) is upper left corner).
-        screen.blit(background, (0, 0))
+            update_board()
+
         pygame.display.flip()
 
     # Finish Pygame.
