@@ -10,8 +10,10 @@ class GameOfLife:
         self._adjacency = []
 
     def generate(self, density=0.25):
+        # Make grid as one-dimensional array of Boolean
         self.grid = [random.random() < density for _ in range(self.size)]
 
+        # Make array of neighbours of each cell
         def make_adjacency(cell_idx):
             adjacent = []
             directions = [(0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1)]
