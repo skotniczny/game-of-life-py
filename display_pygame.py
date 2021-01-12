@@ -57,6 +57,9 @@ def run(board: GameOfLife, box_size):
                 # User presses ESCAPE-Key
                 if event.key == pygame.K_SPACE:
                     is_stopped = not is_stopped
+                if event.key == pygame.K_RETURN:
+                    board.next_generation()
+                    update_board()
                 if event.key == pygame.K_ESCAPE:
                     mainloop = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
