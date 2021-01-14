@@ -1,3 +1,5 @@
+# https://github.com/skotniczny/game-of-life-py
+
 from engine import GameOfLife
 import display_tkinter
 import display_cmd

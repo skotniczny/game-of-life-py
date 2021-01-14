@@ -54,12 +54,14 @@ def run(board: GameOfLife, box_size):
             if event.type == pygame.QUIT:
                 mainloop = False
             elif event.type == pygame.KEYDOWN:
-                # User presses ESCAPE-Key
+                # User presses SPACE-Key
                 if event.key == pygame.K_SPACE:
                     is_stopped = not is_stopped
+                # User presses RETURN-Key (ENTER)
                 if event.key == pygame.K_RETURN:
                     board.next_generation()
                     update_board()
+                # User presses ESCAPE-Key
                 if event.key == pygame.K_ESCAPE:
                     mainloop = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -71,8 +73,9 @@ def run(board: GameOfLife, box_size):
                     board.toggle_cell(cell_index)
                     update_board()
 
-        # Print framerate and playtime in titlebar.
-        text = "FPS: {0:.2f}   Playtime: {1:.2f}".format(clock.get_fps(), playtime)
+        # Print keys description, framerate and playtime in titlebar.
+        text = f"Press SPACE to stop  |  Press ENTER to make next generation  |  CLICK to edit board  |  " \
+               f"FPS: {format(clock.get_fps(), '.2f')}  Playtime: {format(playtime, '.2f')}"
         pygame.display.set_caption(text)
         if not is_stopped:
             board.next_generation()
@@ -84,4 +87,4 @@ def run(board: GameOfLife, box_size):
     pygame.quit()
 
     # At the very last:
-    print("This game was played for {0:.2f} seconds".format(playtime))
+    print(f"This game was played for {format(playtime, '.2f')} seconds")
