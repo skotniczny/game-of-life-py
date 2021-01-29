@@ -61,6 +61,9 @@ def run(board: GameOfLife, box_size):
                 if event.key == pygame.K_RETURN:
                     board.next_generation()
                     update_board()
+                if event.key == pygame.K_n:
+                    board.generate()
+                    update_board()
                 # User presses ESCAPE-Key
                 if event.key == pygame.K_ESCAPE:
                     mainloop = False
@@ -74,8 +77,8 @@ def run(board: GameOfLife, box_size):
                     update_board()
 
         # Print keys description, framerate and playtime in titlebar.
-        text = f"Press SPACE to stop  |  Press ENTER to make next generation  |  CLICK to edit board  |  " \
-               f"FPS: {format(clock.get_fps(), '.2f')}  Playtime: {format(playtime, '.2f')}"
+        text = f"Press SPACE to stop  |  Press ENTER to make next generation  | Press N to generate new | " \
+               f"CLICK to edit board  |" f"FPS: {format(clock.get_fps(), '.2f')}  Playtime: {format(playtime, '.2f')}"
         pygame.display.set_caption(text)
         if not is_stopped:
             board.next_generation()

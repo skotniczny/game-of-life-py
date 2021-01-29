@@ -9,9 +9,9 @@ class GameOfLife:
         self.grid = []
         self._adjacency = []
 
-    def generate(self, density=0.25):
+    def generate(self):
         # Make grid as one-dimensional array of Boolean
-        self.grid = [random.random() < density for _ in range(self.size)]
+        self.make_grid()
 
         # Make array of neighbours of each cell
         def make_adjacency(cell_idx):
@@ -28,6 +28,10 @@ class GameOfLife:
                     adjacent.append(idx)
             return adjacent
         self._adjacency = [make_adjacency(i) for i in range(self.size)]
+
+    def make_grid(self, density=0.25):
+        # Make grid as one-dimensional array of Boolean
+        self.grid = [random.random() < density for _ in range(self.size)]
 
     def clear(self):
         return [False for _ in self.grid]
