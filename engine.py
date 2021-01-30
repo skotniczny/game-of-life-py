@@ -34,7 +34,7 @@ class GameOfLife:
         self.grid = [random.random() < density for _ in range(self.size)]
 
     def clear(self):
-        return [False for _ in self.grid]
+        self.grid = [False for item in self.grid]
 
     def next_generation(self):
         def next_state(cell_idx):
@@ -50,3 +50,9 @@ class GameOfLife:
 
     def toggle_cell(self, index):
         self.grid[index] = (not self.grid[index])
+
+    def insert(self, pattern):
+        for y in range(len(pattern)):
+            for x in pattern[y]:
+                idx = x + (y * self.width)
+                self.grid[idx] = True
