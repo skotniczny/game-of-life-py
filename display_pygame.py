@@ -1,5 +1,6 @@
 from engine import GameOfLife
-from patterns import gosper_glider_gun, new_gun_2
+from decoder import parse
+import patterns
 import math
 import pygame
 
@@ -67,12 +68,15 @@ def run(board: GameOfLife, box_size):
                     update_board()
                 if event.key == pygame.K_1:
                     board.clear()
-                    board.insert(gosper_glider_gun)
+                    board.insert(parse(patterns.gosper_glider_gun))
                     update_board()
                 if event.key == pygame.K_2:
                     board.clear()
-                    board.insert(new_gun_2)
+                    board.insert(parse(patterns.new_gun))
                     update_board()
+                if event.key == pygame.K_3:
+                    board.clear()
+                    board.insert(parse(patterns.new_gun_2))
                 # User presses ESCAPE-Key
                 if event.key == pygame.K_ESCAPE:
                     mainloop = False
