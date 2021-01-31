@@ -1,5 +1,5 @@
 from engine import GameOfLife
-from patterns import gosper_glider_gun
+from patterns import gosper_glider_gun, new_gun_2
 import math
 import pygame
 
@@ -68,6 +68,10 @@ def run(board: GameOfLife, box_size):
                 if event.key == pygame.K_1:
                     board.clear()
                     board.insert(gosper_glider_gun)
+                    update_board()
+                if event.key == pygame.K_2:
+                    board.clear()
+                    board.insert(new_gun_2)
                     update_board()
                 # User presses ESCAPE-Key
                 if event.key == pygame.K_ESCAPE:
