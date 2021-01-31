@@ -46,6 +46,12 @@ def run(board: GameOfLife, box_size):
         # Copy background to screen (position (0, 0) is upper left corner).
         screen.blit(background, (0, 0))
 
+    def insert_pattern(pattern):
+        nonlocal board
+        board.clear()
+        board.insert(parse(pattern))
+        update_board()
+
     while mainloop:
         # Do not go faster than this framerate.
         milliseconds = clock.tick(fps)
@@ -67,16 +73,13 @@ def run(board: GameOfLife, box_size):
                     board.generate()
                     update_board()
                 if event.key == pygame.K_1:
-                    board.clear()
-                    board.insert(parse(patterns.gosper_glider_gun))
-                    update_board()
+                    insert_pattern(patterns.gosper_glider_gun)
                 if event.key == pygame.K_2:
-                    board.clear()
-                    board.insert(parse(patterns.new_gun))
-                    update_board()
+                    insert_pattern(patterns.new_gun)
                 if event.key == pygame.K_3:
-                    board.clear()
-                    board.insert(parse(patterns.new_gun_2))
+                    insert_pattern(patterns.new_gun_2)
+                if event.key == pygame.K_4:
+                    insert_pattern(patterns.p20_glider_gun)
                 # User presses ESCAPE-Key
                 if event.key == pygame.K_ESCAPE:
                     mainloop = False
