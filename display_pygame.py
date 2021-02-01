@@ -80,6 +80,8 @@ def run(board: GameOfLife, box_size):
                     insert_pattern(patterns.new_gun_2)
                 if event.key == pygame.K_4:
                     insert_pattern(patterns.p20_glider_gun)
+                if event.key == pygame.K_5:
+                    insert_pattern(patterns.period_60_glider_gun)
                 # User presses ESCAPE-Key
                 if event.key == pygame.K_ESCAPE:
                     mainloop = False
