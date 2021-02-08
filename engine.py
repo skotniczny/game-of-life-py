@@ -1,4 +1,5 @@
 import random
+from typing import Tuple
 
 
 class GameOfLife:
@@ -51,8 +52,8 @@ class GameOfLife:
     def toggle_cell(self, index):
         self.grid[index] = (not self.grid[index])
 
-    def insert(self, pattern):
+    def insert(self, pattern, offset: Tuple[int, int] = (0, 0)):
         for y in range(len(pattern)):
             for x in pattern[y]:
-                idx = x + (y * self.width)
+                idx = (x + offset[0]) + ((y + offset[1]) * self.width)
                 self.grid[idx] = True

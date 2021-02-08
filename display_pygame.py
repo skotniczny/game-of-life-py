@@ -1,5 +1,6 @@
 from engine import GameOfLife
 from decoder import parse
+from typing import Tuple
 import patterns
 import math
 import pygame
@@ -46,10 +47,10 @@ def run(board: GameOfLife, box_size):
         # Copy background to screen (position (0, 0) is upper left corner).
         screen.blit(background, (0, 0))
 
-    def insert_pattern(pattern):
+    def insert_pattern(pattern, offset: Tuple[int, int] = (0, 0)):
         nonlocal board
         board.clear()
-        board.insert(parse(pattern))
+        board.insert(parse(pattern), offset)
         update_board()
 
     while mainloop:
@@ -82,6 +83,10 @@ def run(board: GameOfLife, box_size):
                     insert_pattern(patterns.p20_glider_gun)
                 if event.key == pygame.K_5:
                     insert_pattern(patterns.period_60_glider_gun)
+                if event.key == pygame.K_6:
+                    insert_pattern(patterns.b52_bomber, (5, 15))
+                if event.key == pygame.K_7:
+                    insert_pattern(patterns.quasar3, (10, 5))
                 # User presses ESCAPE-Key
                 if event.key == pygame.K_ESCAPE:
                     mainloop = False
